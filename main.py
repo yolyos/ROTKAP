@@ -22,7 +22,7 @@ class Bot(BaseBot):
         self.user_positions = {} 
         self.position_tasks = {} 
         
-    haricler = ["karainek"]
+    haricler = ["3.N._K._B","yolyos","owner_disco","","","","","","",","] 
 
     async def on_emote(self, user: User, emote_id: str, receiver: User | None) -> None:
       print(f"{user.username} emoted: {emote_id}")
@@ -30,52 +30,93 @@ class Bot(BaseBot):
     async def on_start(self, session_metadata: SessionMetadata) -> None:
         print("hi im alive?")
         await self.highrise.tg.create_task(self.highrise.teleport(
-            session_metadata.user_id, Position(10.0, 1.0, 6.5, "FrontRight")))
+            session_metadata.user_id, Position(4,0, 1, "FrontRight")))
              
 
-    async def on_user_join(self, user: User, position: Position | AnchorPosition) -> None:
-        await self.highrise.chat(f"Hoşgeldin @{user.username} !")
-        try:
-            emote_name = random.choice(list(secili_emote.keys()))
-            emote_info = secili_emote[emote_name]
-            emote_to_send = emote_info["value"]
-            await self.send_emote(emote_to_send, user.id)
-        except Exception as e:
-            print(f"Error sending emote to user {user.id}: {e}")
-  
-    async def on_user_leave(self, user: User):
-    
-        user_id = user.id
-        farewell_message = f"Görüşürüz @{user.username}!"
-        if user_id in self.user_emote_loops:
-            await self.stop_emote_loop(user_id)
-        await self.highrise.chat(farewell_message)
+        
   
 
     async def on_chat(self, user: User, message: str) -> None:
-        """On a received room-wide chat."""    
+        """On a received room-wide chat.""" 
+    
+        if message.lower().startswith("rest"):
+          await self.highrise.send_emote("sit-idle-cute")
 
-        if message.lower().startswith("oyna"):
-          await self.highrise.send_emote("dance-wild")
-      
+        isimler1 = [
+            "\n1 - ",
+            "\n2 - ",
+            "\n3 - ",
+            "\n4 - ",
+            "\n5 - ",
+        ]
+        isimler2 = [
+            "\n6 - ",
+            "\n7 - ",
+            "\n8 - ",
+            "\n9 - ",
+            "\n10 - ",
+        ]
+        isimler3 = [
+            "\n11 - ",
+            "\n12 - ",
+            "\n13 - ",
+            "\n14 - ",
+            "\n15 - ",
+        ]
+        isimler4 = [
+            "\n16 - ",
+            "\n17 - ",
+            "\n18 - ",
+            "\n19 - ",
+            "\n20 - ",
+        ]
+        isimler5 = [
+            "\n21 - ",
+            "\n22 - ",
+            "\n23 - ",
+            "\n24 - ",
+            "\n25 - ",
+            "\n26 - "
+
+            # Diğer isimler buraya eklenecek
+        ]
+
+        
+        if message.lower().startswith("كتش عليه"):
+              await self.highrise.chat("\n".join(isimler1))
+              await self.highrise.chat("\n".join(isimler2))
+              await self.highrise.chat("\n".join(isimler3))
+              await self.highrise.chat("\n".join(isimler4))
+              await self.highrise.chat("\n".join(isimler5))
+              await self.highrise.chat(f"\n\n هو هو هو هو هعضك يبن التيت😡🐶")
+
 
         message = message.lower()
 
-        teleport_locations = {
-            "kapi": Position(0.5, 0.0, 0.5),
-            "kapı": Position(0.5, 0.0, 0.5),
-            "kuş": Position(random.randint(0, 40), random.randint(0, 40), random.randint(0, 40)),
-            "kus": Position(random.randint(0, 40), random.randint(0, 40), random.randint(0, 40))
-        }
+        teleport_locations = {            "klhugkhg": Position(
+4, 9, 7),
+            "jkhug65568ty": Position(13, 7, 11),
+            "vknjkgtf85rfcfcp": Position(14, 16.7, 6),                           
+            "vkg8t9ygvdt2": Position(
+17, 13, 20),    
+            "vjlghytf6y89":  Position(   4.5,  22,1.4),   
+                "ljghyfr5o76": Position( 
+ 10.0,1,12.0),                   
+             "اkgpohyygg78puhلنهر"  :Position(
+ 6,   21,3.0)                        
+
+
+                              
+                             } 
 
         for location_name, position in teleport_locations.items():
             if message ==(location_name):
                 try:
                     await self.teleport(user, position)
                 except:
-                    print("Teleportasyon sırasında hata oluştu")
+                    print("Teleporlanma sırasında hata oluştu")
                   
-        if message.lower().startswith("cak") and await self.is_user_allowed(user):
+        if message.lower().startswith("علق") and await self.is_user_allowed(user):
             target_username = message.split("@")[-1].strip()
             room_users = await self.highrise.get_room_users()
             user_info = next((info for info in room_users.content if info[0].username.lower() == target_username.lower()), None)
@@ -88,7 +129,7 @@ class Bot(BaseBot):
                     self.position_tasks[target_user_obj.id] = []
                 self.position_tasks[target_user_obj.id].append(task)
 
-        elif message.lower().startswith("cek") and await self.is_user_allowed(user):
+        elif message.lower().startswith("حرك") and await self.is_user_allowed(user):
             target_username = message.split("@")[-1].strip()
             room_users = await self.highrise.get_room_users()
             target_user_obj = next((user_obj for user_obj, _ in room_users.content if user_obj.username.lower() == target_username.lower()), None)
@@ -101,7 +142,7 @@ class Bot(BaseBot):
             else:
                 print(f"User {target_username} not found in the room.")
 
-        if message.lower().startswith("info"):
+        if message.lower().startswith("بروفايل"):
             target_username = message.split("@")[-1].strip()
             await self.userinfo(user, target_username)
 
@@ -114,7 +155,7 @@ class Bot(BaseBot):
             await self.adjust_position(user, message, 'z')
               
       
-        allowed_commands = ["switch", "degis", "değiş"] 
+        allowed_commands = ["بدل", "degis", "değiş","değis","degiş"] 
         if any(message.lower().startswith(command) for command in allowed_commands) and await self.is_user_allowed(user):
             target_username = message.split("@")[-1].strip()
 
@@ -124,14 +165,14 @@ class Bot(BaseBot):
             else:
                 print(f"{target_username} is in the exclusion list and won't be affected by the switch.")
 
-        if                          message.lower().startswith("gotur") or message.lower().startswith("götür"):
+        if                          message.lower().startswith("tel") or message.lower().startswith("روح"):
           target_username =         message.split("@")[-1].strip()
           await                     self.teleport_to_user(user, target_username)
-        if await self.is_user_allowed(user) and message.lower().startswith("getir"):
+        if await self.is_user_allowed(user) and message.lower().startswith("هات"):
             target_username = message.split("@")[-1].strip()
             if target_username not in self.haricler:
                 await self.teleport_user_next_to(target_username, user)
-        if message.lower().startswith("git") and await self.is_user_allowed(user):
+        if message.lower().startswith("ودي") and await self.is_user_allowed(user):
             parts = message.split()
             if len(parts) == 2 and parts[1].startswith("@"):
                 target_username = parts[1][1:]
@@ -152,7 +193,7 @@ class Bot(BaseBot):
                 else:
                     print(f"Kullanıcı adı '{target_username}' odada bulunamadı.")
 
-        if message.lower() == "full kus" or message.lower() == "full kuş":
+        if message.lower() == "لف الروم" or message.lower() == "برةتلىوتلل":
             if user.id not in self.kus:
                 self.kus[user.id] = False
 
@@ -161,18 +202,18 @@ class Bot(BaseBot):
 
                 try:
                     while self.kus.get(user.id, False):
-                        kl = Position(random.randint(0, 40), random.randint(0, 40), random.randint(0, 40))
+                        kl = Position(random.randint(0, 29), random.randint(0, 29), random.randint(0, 29))
                         await self.teleport(user, kl)
 
                         await asyncio.sleep(0.7)
                 except Exception as e:
                     print(f"Teleport sırasında bir hata oluştu: {e}")
 
-        if message.lower() == "dur" or message.lower() == "stop":
+        if message.lower() == "توقف" or message.lower() == "stop":
             if user.id in self.kus: 
                 self.kus[user.id] = False
 
-        if message.lower().startswith("ceza") and await self.is_user_allowed(user):
+        if message.lower().startswith("مرجح") and await self.is_user_allowed(user):
             target_username = message.split("@")[-1].strip().lower()
 
             if target_username not in self.haricler:
@@ -185,18 +226,18 @@ class Bot(BaseBot):
 
                         try:
                             while self.is_teleporting_dict.get(target_user.id, False):
-                                kl = Position(random.randint(0, 30), random.randint(0, 0), random.randint(0, 30))
+                                kl = Position(random.randint(0, 39), random.randint(0, 29), random.randint(0, 39))
                                 await self.teleport(target_user, kl)
                                 await asyncio.sleep(1)
                         except Exception as e:
                             print(f"An error occurred while teleporting: {e}")
 
                         self.is_teleporting_dict.pop(target_user.id, None)
-                        final_position = Position(17.0, 0.0, 13.5, "FrontRight")
+                        final_position = Position(1.0, 0.0, 14.5, "FrontRight")
                         await self.teleport(target_user, final_position)
                     
 
-        if message.lower().startswith("dur") and await self.is_user_allowed(user):
+        if message.lower().startswith("وقف") and await self.is_user_allowed(user):
             target_username = message.split("@")[-1].strip().lower()
 
             room_users = (await self.highrise.get_room_users()).content
@@ -206,20 +247,20 @@ class Bot(BaseBot):
                 self.is_teleporting_dict.pop(target_user.id, None)
                 
 
-        if message.lower() == "takip" and await self.is_user_allowed(user):
+        if message.lower() == "ولا صبحي" and await self.is_user_allowed(user):
             if self.following_user is not None:
                 await self.highrise.chat("Şu anda başka birini takip ediyorum, sıranızı bekleyin.")
             else:
                 await self.follow(user)
 
-        if message.lower() == "stay" and await self.is_user_allowed(user):
+        if message.lower() == "توقف" and await self.is_user_allowed(user):
             if self.following_user is not None:
                 await self.highrise.chat("Takip etmeyi bıraktım.")
                 self.following_user = None
             else:
                 await self.highrise.chat("Şu anda kimseyi takip etmiyorum.")
               
-        if message.lower().startswith("kick") and await self.is_user_allowed(user):
+        if message.lower().startswith("برا") and await self.is_user_allowed(user):
             parts = message.split()
             if len(parts) != 2:
                 return
@@ -241,14 +282,15 @@ class Bot(BaseBot):
                 await self.highrise.moderate_room(user_id, "kick")
             except Exception as e:
                 return
+             
 
 
       
         message = message.strip().lower()
         user_id = user.id
       
-        if message.startswith("full"):
-            emote_name = message.replace("full", "").strip()
+        if message.startswith(""):
+            emote_name = message.replace("", "").strip()
             if user_id in self.user_emote_loops and self.user_emote_loops[user_id] == emote_name:
                 await self.stop_emote_loop(user_id)
             else:
@@ -258,19 +300,19 @@ class Bot(BaseBot):
             if user_id in self.user_emote_loops:
                 await self.stop_emote_loop(user_id)
                 
-        if message == "ulti":
+        if message == "رقصني":
             if user_id not in self.user_emote_loops:
                 await self.start_random_emote_loop(user_id)
                 
-        if message == "stop" or message == "dur":
+        if message == "stop" or message == "توقف":
             if user_id in self.user_emote_loops:
-                if self.user_emote_loops[user_id] == "ulti":
+                if self.user_emote_loops[user_id] == "رقصني":
                     await self.stop_random_emote_loop(user_id)
      
 
         message = message.strip().lower()
 
-        if "@" in message:
+        if "فيس" in message:
             parts = message.split("@")
             if len(parts) < 2:
                 return
@@ -323,7 +365,7 @@ class Bot(BaseBot):
         message = message.strip().lower()
 
         try:
-            if message.lstrip().startswith(("cast")):
+            if message.lstrip().startswith(("اسحر")):
                 response = await self.highrise.get_room_users()
                 users = [content[0] for content in response.content]
                 usernames = [user.username.lower() for user in users]
@@ -333,13 +375,13 @@ class Bot(BaseBot):
                 if len(args) >= 1 and args[0][0] == "@" and args[0][1:].lower() in usernames:
                     user_id = next((u.id for u in users if u.username.lower() == args[0][1:].lower()), None)
 
-                    if message.lower().startswith("cast"):
+                    if message.lower().startswith("اسحر"):
                         await self.highrise.send_emote("emote-telekinesis", user.id)
                         await self.highrise.send_emote("emote-gravity", user_id)
         except Exception as e:
             print(f"An error occurred: {e}")
           
-        if message.startswith("dans") or message.startswith("dance"):
+        if message.startswith("rd") or message.startswith("رقصات"):
             try:
                 emote_name = random.choice(list(secili_emote.keys()))
                 emote_to_send = secili_emote[emote_name]["value"]
@@ -402,8 +444,8 @@ class Bot(BaseBot):
 #Ulti Ulti Ulti Ulti Ulti Ulti Ulti
 
     async def start_random_emote_loop(self, user_id: str) -> None:
-        self.user_emote_loops[user_id] = "ulti"
-        while self.user_emote_loops.get(user_id) == "ulti":
+        self.user_emote_loops[user_id] = "dans"
+        while self.user_emote_loops.get(user_id) == "dans":
             try:
                 emote_name = random.choice(list(secili_emote.keys()))
                 emote_info = secili_emote[emote_name]
@@ -438,7 +480,7 @@ class Bot(BaseBot):
   
     async def is_user_allowed(self, user: User) -> bool:
         user_privileges = await self.highrise.get_room_privilege(user.id)
-        return user_privileges.moderator or user.username in ["karainek", "primadonnagal"]
+        return user_privileges.moderator or user.username in ["3.N._K._B", "yolyos", "owner_DISCO", "covertina"]
 
 #gellllbbb
 
@@ -477,7 +519,7 @@ class Bot(BaseBot):
 
         last_login = user_info.user.last_online_in.strftime("%d/%m/%Y %H:%M:%S") if user_info.user.last_online_in else "Son giriş bilgisi mevcut değil"
 
-        await self.highrise.chat(f"""Kullanıcı adı: {target_username}\nTakipçi: {number_of_followers}\nArkadaş: {number_of_friends}\nOyuna Başlama: {joined_at}\nOyanma Süresi: {days_played}""")
+        await self.highrise.chat(f"""ااسم المستخدم {target_username}\n عدد المتابعين: {number_of_followers}\n عدد الاصدقاء: {number_of_friends}\n انضم منذ: {joined_at}\n عدد ايام اللعب: {days_played}""")
 
     async def follow(self, user: User, message: str = ""):
         self.following_user = user  
@@ -628,8 +670,8 @@ class WebServer():
     t.start()
     
 class RunBot():
-  room_id = "662269a6f45635a7fe994c30"
-  bot_token = "833516eda65e03f53f748453cbd6e97cd644915f63c42e1e97faf5c7ce0c1dca"
+  room_id = "66b16b4ecd6e1bf020f10edd"
+  bot_token = "85758a0e1aab1cfda2a589e8497893fa2c7fe8aea22853cf648b4583ab1bcd1b"
   bot_file = "main"
   bot_class = "Bot"
 
